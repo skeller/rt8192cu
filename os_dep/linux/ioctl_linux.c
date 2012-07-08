@@ -143,7 +143,7 @@ static void indicate_wx_custom_event(_adapter *padapter, char *msg)
 	union iwreq_data wrqu;
 
 	if (strlen(msg) > IW_CUSTOM_MAX) {
-		DBG_871X("%s strlen(msg):%u > IW_CUSTOM_MAX:%u\n", __FUNCTION__ ,strlen(msg), IW_CUSTOM_MAX);
+		DBG_871X("%s strlen(msg):%lu > IW_CUSTOM_MAX:%d\n", __FUNCTION__ ,strlen(msg), IW_CUSTOM_MAX);
 		return;
 	}
 
@@ -3865,7 +3865,7 @@ static int rtw_p2p_set_go_nego_ssid(struct net_device *dev,
 	struct iw_point *pdata = &wrqu->data;
 	struct wifidirect_info *pwdinfo= &(padapter->wdinfo);
 
-	DBG_8192C( "[%s] ssid = %s, len = %d\n", __FUNCTION__, extra, strlen( extra ) );
+	DBG_8192C( "[%s] ssid = %s, len = %lu\n", __FUNCTION__, extra, strlen( extra ) );
 	_rtw_memcpy( pwdinfo->nego_ssid, extra, strlen( extra ) );
 	pwdinfo->nego_ssidlen = strlen( extra );
 	
