@@ -519,7 +519,15 @@ config_r:
 	@echo "make config"
 	/bin/bash script/Configure script/config.in
 	
-.PHONY: modules clean
+.PHONY: modules clean dist
+
+TBVER=3.4.3.4369.20120622
+
+dist:
+	rm -f rt8192cu-$(TBVER)
+	ln -s . rt8192cu-$(TBVER)
+	tar -cvzf rt8192cu-$(TBVER).tar.gz --exclude="*/rt8192cu-$(TBVER)*" --exclude="*/.*" rt8192cu-$(TBVER)/*
+	rm -f rt8192cu-$(TBVER)
 
 clean:
 	rm -fr *.mod.c *.mod *.o .*.cmd *.ko *~
@@ -534,5 +542,6 @@ clean:
 	cd os_dep ; rm -fr *.mod.c *.mod *.o .*.cmd *.ko 
 	cd patches ; rm -fr tmp
 	cd patches ; rm -f original new rt8192cu_diff.patch
+	rm -f rt8192cu-$(TBVER) rt8192cu*.tar.gz
 endif
 
