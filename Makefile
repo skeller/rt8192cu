@@ -532,5 +532,7 @@ clean:
 	cd hal ; rm -fr *.mod.c *.mod *.o .*.cmd *.ko 
 	cd os_dep/linux ; rm -fr *.mod.c *.mod *.o .*.cmd *.ko 
 	cd os_dep ; rm -fr *.mod.c *.mod *.o .*.cmd *.ko 
+	cd patches ; rm -fr tmp
+	cd patches ; rm -f original new rt8192cu_diff.patch
 endif
 
