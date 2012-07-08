@@ -32,6 +32,20 @@ this driver can claim the wlan-device.
 You can clean up the directory tree with:
 	make clean
 
+== Patch ==
+
+The ./patches/ directory contains an helper that can generate a patch with all
+changes that can be applied to the latest tarball. This way, one does not have
+to clone the whole repository to get the sources. Simply run:
+	cd patches
+	./mkdiff.sh
+This will generate ./patches/rt8192cu_diff.patch which can be applied with:
+	patch -p1 <rt8192cu_diff.patch
+to the original driver tarball which can also be found in this repository.
+
+The current Realtek driver version that this repository is based on is:
+	v3.4.3_4369.20120622
+
 == License / Copying ==
 
 The Realtek tarball didn't include license-terms, however, all code files that I
