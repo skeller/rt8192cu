@@ -499,6 +499,8 @@ void rtw_proc_remove_one(struct net_device *dev)
 
 		remove_proc_entry("rssi_disp", dir_dev);
 
+		remove_proc_entry("ampdu_enable", dir_dev);
+
 		remove_proc_entry(dev->name, rtw_proc);
 		dir_dev = NULL;
 		
