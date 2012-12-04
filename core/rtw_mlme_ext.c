@@ -9760,11 +9760,12 @@ void free_mlme_ap_info(_adapter *padapter)
 	rtw_free_all_stainfo(padapter);
 
 	//free bc/mc sta_info
-	psta = rtw_get_bcmc_stainfo(padapter);	
-	_enter_critical_bh(&(pstapriv->sta_hash_lock), &irqL);		
-	rtw_free_stainfo(padapter, psta);
-	_exit_critical_bh(&(pstapriv->sta_hash_lock), &irqL);
-	
+	psta = rtw_get_bcmc_stainfo(padapter);
+	if(psta != NULL) {
+		_enter_critical_bh(&(pstapriv->sta_hash_lock), &irqL);
+		rtw_free_stainfo(padapter, psta);
+		_exit_critical_bh(&(pstapriv->sta_hash_lock), &irqL);
+	}
 
 	_rtw_spinlock_free(&pmlmepriv->bcn_update_lock);
 	
