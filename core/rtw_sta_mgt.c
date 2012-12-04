@@ -534,7 +534,13 @@ _func_enter_;
 
 	//rtw_indicate_sta_disassoc_event(padapter, psta);
 
-	if (pstapriv->sta_aid[psta->aid - 1] == psta)
+        /* DEBUG: */
+        if (psta->aid <= 0 || psta->aid > NUM_STA) {
+                RT_TRACE(_module_rtl871x_sta_mgt_c_,_drv_err_,("ERROR=> rtw_free_stainfo: index <= 0 || > NUM_STA"));
+                DBG_8192C("ERROR=> rtw_free_stainfo: index <= 0 || > NUM_STA\n");
+        }
+
+	if (psta->aid > 0 && psta->aid <= NUM_STA && pstapriv->sta_aid[psta->aid - 1] == psta)
 	{
 		pstapriv->sta_aid[psta->aid - 1] = NULL;
 		psta->aid = 0;
