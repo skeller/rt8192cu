@@ -2586,6 +2586,9 @@ HAL_INIT_PROFILE_TAG(HAL_INIT_STAGES_MISC31);
 		DBG_8192C("MAC Address from REG_MACID = "MAC_FMT"\n", MAC_ARG(mac_addr));
 	}
 
+#ifdef CONFIG_ENABLE_NOTCH_FILTER
+	rtw_write8(Adapter, 0xc41, 0x42);	
+#endif
 exit:
 HAL_INIT_PROFILE_TAG(HAL_INIT_STAGES_END);
 

@@ -445,6 +445,13 @@ void rtw_proc_init_one(struct net_device *dev)
 	}
 	entry->write_proc = proc_set_rx_signal;
 
+	entry = create_proc_read_entry("ampdu_enable", S_IFREG | S_IRUGO,
+				   dir_dev, proc_get_ampdu_enable, dev);				   
+	if (!entry) {
+		DBG_871X("Unable to create_proc_read_entry!\n"); 
+		return;
+	}
+	entry->write_proc = proc_set_ampdu_enable;
 
 	entry = create_proc_read_entry("rssi_disp", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_rssi_disp, dev);				   
@@ -493,6 +500,8 @@ void rtw_proc_remove_one(struct net_device *dev)
 		remove_proc_entry("rx_signal", dir_dev);
 
 		remove_proc_entry("rssi_disp", dir_dev);
+
+		remove_proc_entry("ampdu_enable", dir_dev);
 
 		remove_proc_entry(dev->name, rtw_proc);
 		dir_dev = NULL;
@@ -1211,7 +1220,7 @@ u8 rtw_free_drv_sw(_adapter *padapter)
 	
 }
 
-int netdev_open(struct net_device *pnetdev)
+int _netdev_open(struct net_device *pnetdev)
 {
 	uint status;	
 	_adapter *padapter = (_adapter *)rtw_netdev_priv(pnetdev);
@@ -1362,7 +1371,18 @@ netdev_open_error:
 	
 }
 
+int netdev_open(struct net_device *pnetdev)
+{
+	int ret;
+	_adapter *padapter = (_adapter *)rtw_netdev_priv(pnetdev);
+	struct pwrctrl_priv *pwrctrlpriv = &padapter->pwrctrlpriv;
 
+	_enter_pwrlock(&pwrctrlpriv->lock);
+	ret = _netdev_open(pnetdev);
+	_exit_pwrlock(&pwrctrlpriv->lock);
+
+	return ret;
+}
 
 #ifdef CONFIG_IPS
 int  ips_netdrv_open(_adapter *padapter)
@@ -1457,7 +1477,7 @@ int pm_netdev_open(struct net_device *pnetdev,u8 bnormal)
 {
 	int status;
 	if(bnormal)
-		status = netdev_open(pnetdev);
+		status = _netdev_open(pnetdev);
 #ifdef CONFIG_IPS
 	else
 		status =  (_SUCCESS == ips_netdrv_open((_adapter *)rtw_netdev_priv(pnetdev)))?(0):(-1);
