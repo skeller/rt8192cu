@@ -51,6 +51,8 @@
 #include <rtw_br_ext.h>
 #endif //CONFIG_BR_EXT
 
+#include<linux/kthread.h>
+
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Realtek Wireless Lan Driver");
 MODULE_AUTHOR("Realtek Semiconductor Corp.");
@@ -790,18 +792,18 @@ u32 rtw_start_drv_threads(_adapter *padapter)
 	RT_TRACE(_module_os_intfs_c_,_drv_info_,("+rtw_start_drv_threads\n"));
 
 #ifdef CONFIG_SDIO_HCI
-	padapter->xmitThread = kernel_thread(rtw_xmit_thread, padapter, CLONE_FS|CLONE_FILES);
+	padapter->xmitThread = kthread_run(rtw_xmit_thread, padapter, "xmit_thread");
 	if(padapter->xmitThread < 0)
 		_status = _FAIL;
 #endif
 
 #ifdef CONFIG_RECV_THREAD_MODE
-	padapter->recvThread = kernel_thread(recv_thread, padapter, CLONE_FS|CLONE_FILES);
+	padapter->recvThread = kthread_run(recv_thread, padapter, "recv_thread");
 	if(padapter->recvThread < 0)
 		_status = _FAIL;	
 #endif
 
-	padapter->cmdThread = kernel_thread(rtw_cmd_thread, padapter, CLONE_FS|CLONE_FILES);
+	padapter->cmdThread = kthread_run(rtw_cmd_thread, padapter, "cmd_thread");
 	if(padapter->cmdThread < 0)
 		_status = _FAIL;
 	else
@@ -809,7 +811,7 @@ u32 rtw_start_drv_threads(_adapter *padapter)
 		
 
 #ifdef CONFIG_EVENT_THREAD_MODE
-	padapter->evtThread = kernel_thread(event_thread, padapter, CLONE_FS|CLONE_FILES);
+	padapter->evtThread = kthread_run(event_thread, padapter, "evt_thread");
 	if(padapter->evtThread < 0)
 		_status = _FAIL;		
 #endif

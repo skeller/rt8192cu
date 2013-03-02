@@ -31,6 +31,7 @@
 #include <rtl8192d_hal.h>
 #endif
 
+#include<linux/kthread.h>
 
 #ifdef CONFIG_MP_INCLUDED
 
@@ -1140,7 +1141,7 @@ void SetPacketTx(PADAPTER padapter)
 	_rtw_memset(ptr, payload, pkt_end - ptr);
 
 	//3 6. start thread
-	pmp_priv->tx.PktTxThread = kernel_thread(mp_xmit_packet_thread, pmp_priv, CLONE_FS|CLONE_FILES);
+	pmp_priv->tx.PktTxThread = kthread_run(mp_xmit_packet_thread, pmp_priv, "pkt_tx");
 	if(pmp_priv->tx.PktTxThread < 0)
 		DBG_871X("Create PktTx Thread Fail !!!!!\n");
 

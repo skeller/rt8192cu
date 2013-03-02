@@ -572,7 +572,7 @@ __inline static void thread_enter(void *context)
 #ifdef PLATFORM_LINUX
 	//struct net_device *pnetdev = (struct net_device *)context;
 	//daemonize("%s", pnetdev->name);
-	daemonize("%s", "RTKTHREAD");
+	//daemonize("%s", "RTKTHREAD");
 	allow_signal(SIGTERM);
 #endif
 }
