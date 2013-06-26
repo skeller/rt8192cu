@@ -20,6 +20,22 @@ will gladly drop this repository as it isn't really fun to maintain this.
 
 == Install ==
 
+=== Easy Install on Ubuntu ===
+    
+On Ubuntu 13.10, the following commands ought to download and install this
+module, replacing the buggy built-in rtl8192cu driver:
+    
+    sudo apt-get install git build-essential linux-headers-generic
+    git clone https://github.com/dz0ny/rt8192cu.git
+    cd rt8192cu
+    make
+    sudo make install
+    sudo modprobe -r rtl8192cu
+    sudo modprobe 8192cu
+    sudo echo "blacklist rtl8192cu" >> /etc/modprobe.d/blacklist.conf
+
+=== Hard Install ===
+
 You need the kernel headers installed with a working symlink in
 /lib/modules/<version>/kernel to your kernel sources. Then simply run:
 	make
@@ -44,7 +60,7 @@ This will generate ./patches/rt8192cu_diff.patch which can be applied with:
 to the original driver tarball which can also be found in this repository.
 
 The current Realtek driver version that this repository is based on is:
-	v3.4.3_4369.20120622
+	v3.4.4_4749.20121105
 
 == License / Copying ==
 
