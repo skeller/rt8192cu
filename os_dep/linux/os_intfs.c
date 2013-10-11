@@ -257,6 +257,21 @@ static char rtw_proc_name[IFNAMSIZ];
 static struct proc_dir_entry *rtw_proc = NULL;
 static int	rtw_proc_cnt = 0;
 
+/* kernel 3.10+ fix */
+#ifndef create_proc_entry
+/* dummy routines */
+void rtw_proc_remove_one(struct net_device *dev)
+{
+}
+
+void rtw_proc_init_one(struct net_device *dev)
+{
+}
+
+#else /* create_proc_entry not defined */
+/* kernel 3.10+ fix */
+
+
 void rtw_proc_init_one(struct net_device *dev)
 {
 	struct proc_dir_entry *dir_dev = NULL;
@@ -529,6 +544,9 @@ void rtw_proc_remove_one(struct net_device *dev)
 	}
 }
 #endif
+/* kernel 3.10+ fix */
+#endif
+/* kernel 3.10+ fix */
 
 uint loadparam( _adapter *padapter,  _nic_hdl	pnetdev)
 {
@@ -1561,4 +1579,3 @@ static int netdev_close(struct net_device *pnetdev)
 	return 0;
 	
 }
-
