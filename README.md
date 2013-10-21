@@ -18,6 +18,8 @@ release.
 If there are issues, please do not hesitate to contact me. Furthermore, if any
 of you can confirm that the in-tree kernel drivers work with these devices, I
 will gladly drop this repository as it isn't really fun to maintain this.
+## WHAT IS NEW? ##
+Added support for kernel 3.10+ (3.11 working, 3.12 not tested)
 
 ## Install ##
 
