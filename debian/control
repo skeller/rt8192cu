@@ -1,0 +1,11 @@
+Source: rt8192cu-dkms
+Section: misc
+Priority: optional
+Maintainer: Dynamic Kernel Modules Support Team <pkg-dkms-maint@lists.alioth.debian.org>
+Build-Depends: debhelper (>= 7), dkms
+Standards-Version: 3.8.1
+
+Package: rt8192cu-dkms
+Architecture: all
+Depends: dkms (>= 1.95), ${misc:Depends}
+Description: rt8192cu driver in DKMS format.
