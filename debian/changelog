@@ -1,6 +1,0 @@
-rt8192cu-dkms (rt8192cu) stable; urgency=low
-
-  * Automatically packaged by DKMS.
-
- -- Dynamic Kernel Modules Support Team <pkg-dkms-maint@lists.alioth.debian.org>  Sun, 03 Nov 2013 10:26:10 +0100
-
